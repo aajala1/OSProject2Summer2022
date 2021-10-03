@@ -7,7 +7,6 @@
 #include <pthread.h>
 #include <semaphore.h>
 
-
 using namespace std;
 
 template <class T, class U>
@@ -254,15 +253,13 @@ public:
   }
 };
 
-extern int buffer[sizeof(Account)];
-extern sem_t buffer_access;
+int buffer[sizeof(Account)];
+sem_t buffer_access;
 // global stats for saving account
-extern Account savings_account_stats("savings");
-extern Account checking_account_stats("checking");
+SavingAccount savings_account_stats;
+CheckingAccount checking_account_stats;
 
-
-
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   SavingAccount savings_account;
   CheckingAccount checking_account;
