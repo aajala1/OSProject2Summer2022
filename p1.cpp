@@ -14,6 +14,7 @@ using namespace std;
 
 extern void *account_thread(void *);
 
+/* global application variables */
 int buffer[5];
 sem_t buffer_access;
 SavingsAccount savings_account_stats;
