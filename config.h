@@ -3,6 +3,8 @@
 using std::string;
 
 // structure of our params
+//Global variable
+const int BUF_SIZE =5;
 struct thread_params
 {
   int loop_count;

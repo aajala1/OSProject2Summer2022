@@ -4,6 +4,12 @@
 using std::string;
 using namespace std;
 
+CheckingAccount::CheckingAccount()
+                : IAccount()
+{}
+CheckingAccount::CheckingAccount(string t)
+                : IAccount(t) 
+{}
 string CheckingAccount::deposit()
 {
   int amount = this->generate_amount(50, 100);

@@ -1,9 +1,16 @@
 #include <iostream>
 #include "savings.h"
 
+
 using std::string;
 using namespace std;
 
+SavingsAccount::SavingsAccount()
+                : IAccount()
+{}
+SavingsAccount::SavingsAccount(string t)
+                : IAccount(t)
+{}
 string SavingsAccount::deposit()
 {
   int amount = this->generate_amount(100, 150);

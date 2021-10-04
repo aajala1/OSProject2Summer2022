@@ -1,11 +1,15 @@
 #include <iostream>
 #include "account.h"
 using std::string;
+using namespace std;
+
+IAccount::IAccount()
+          :no_deposits(0), no_rejected(0), no_withdrawals(0), balance(0), type("")
+{}
 
 IAccount::IAccount(string t)
-{
-  set_type(t);
-}
+          :type(t)
+{}
 
 /* getters */
 int IAccount::get_no_deposit(void)

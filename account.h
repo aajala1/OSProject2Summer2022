@@ -2,21 +2,21 @@
 #pragma once
 #include <iostream>
 using std::string;
+using namespace std;
 
 //abstract class or interface
 class IAccount
 {
 public:
-  int no_deposits = 0;
-  int no_withdrawals = 0;
-  int no_rejected = 0;
-  int balance = 0;
+  int no_deposits;
+  int no_withdrawals;
+  int no_rejected;
+  int balance;
   string type;
 
-  IAccount(string t)
-  {
-    set_type(t);
-  }
+  IAccount();
+  IAccount(string);
+
 
   /* getters */
   int get_no_deposit(void);

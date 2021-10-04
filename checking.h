@@ -7,9 +7,12 @@ using std::string;
 class CheckingAccount: public IAccount
 {
 public:
-  CheckingAccount(): IAccount("checking")
-  {
-  }
+  // CheckingAccount(): IAccount("checking")
+  // {
+  // }
+  CheckingAccount();
+  CheckingAccount(string);
+  
 
   /* deposit */
   string deposit();// random withdrawal
