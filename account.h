@@ -1,22 +1,15 @@
 //account.h
 #pragma once
 #include <iostream>
-using std::string;
+#include <string.h>
+
 using namespace std;
 
 //abstract class or interface
 class IAccount
 {
 public:
-  int no_deposits;
-  int no_withdrawals;
-  int no_rejected;
-  int balance;
-  string type;
-
-  IAccount();
-  IAccount(string);
-
+  IAccount(string t);
 
   /* getters */
   int get_no_deposit(void);
