@@ -14,7 +14,7 @@ p0: p0.cpp
 
 # Compile p01.cpp
 # OBJ =  account.o savings.o checking.o account_thread.o p1.o
-OBJ =  account.o savings.o checking.o p1.o
+OBJ =  savings.o checking.o p1.o
 p1:  ${OBJ}
 	g++  ${OBJ} -o p1
 # g++  ${OBJ} -lpthread -o p1

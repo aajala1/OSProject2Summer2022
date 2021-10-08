@@ -9,12 +9,6 @@ using namespace std;
 class IAccount
 {
 public:
-  int no_deposits = 0;
-  int no_withdrawals = 0;
-  int no_rejected = 0;
-  int balance = 0;
-  string type;
-
   IAccount(string t);
 
   /* getters */

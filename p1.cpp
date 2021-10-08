@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
   SavingsAccount savings_account_stats;
   CheckingAccount checking_account_stats;
 
-  checking_account_stats.deposit();
+  // checking_account_stats.deposit();
   savings_account_stats.toString();
   checking_account_stats.toString();
 
