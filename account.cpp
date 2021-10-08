@@ -1,6 +1,8 @@
 #include <iostream>
 #include "account.h"
-using std::string;
+#include <string.h>
+
+using namespace std;
 
 IAccount::IAccount(string t)
 {
@@ -69,9 +71,9 @@ string IAccount::strToUpper(string input)
 
 void IAccount::toString()
 {
-  std::cout << "Account type: " << this->type << std::endl;
-  std::cout << "Balance: " << this->balance << std::endl;
-  std::cout << "# of withdrawals: " << this->no_withdrawals << std::endl;
-  std::cout << "# of deposits: " << this->no_deposits << std::endl;
-  std::cout << "# of rejections: " << this->no_rejected << std::endl;
+  std::cout << "Account type: " << type << std::endl;
+  std::cout << "Balance: " << balance << std::endl;
+  std::cout << "# of withdrawals: " << no_withdrawals << std::endl;
+  std::cout << "# of deposits: " << no_deposits << std::endl;
+  std::cout << "# of rejections: " << no_rejected << std::endl;
 }

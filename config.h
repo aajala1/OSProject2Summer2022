@@ -1,5 +1,5 @@
 #pragma once
-#include<iostream>
+#include <iostream>
 using std::string;
 
 // structure of our params
@@ -13,7 +13,7 @@ template <class T, class U>
 string transfer_to(T &current_account, U &target_account)
 {
   int amount = current_account.generate_amount(100, 200);
-  string message = "TRANSFER " + current_account.strToUpper(current_account.type) + " TO " + current_account.strToUpper(target_account.type) + " " + to_string(amount);
+  string message = "TRANSFER " + current_account.strToUpper(current_account.type) + " TO " + current_account.strToUpper(target_account.type) + " " + std::to_string(amount);
 
   // withdraw from our current this->savings_account
   if (current_account.balance < amount)
@@ -28,4 +28,3 @@ string transfer_to(T &current_account, U &target_account)
   }
   return message;
 }
-

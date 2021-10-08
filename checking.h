@@ -1,21 +1,21 @@
 //checking.h
 #pragma once
 #include <iostream>
+#include <string.h>
 #include "account.h"
-using std::string;
 
-class CheckingAccount: public IAccount
+using namespace std;
+
+class CheckingAccount : public IAccount
 {
 public:
-  CheckingAccount(): IAccount("checking")
-  {
-  }
+  CheckingAccount();
 
   /* deposit */
-  string deposit();// random withdrawal
-  string deposit(int amount);// used during transfer
+  string deposit();           // random withdrawal
+  string deposit(int amount); // used during transfer
 
   /* withdrawal */
-  string withdraw(); // random withdrawal
+  string withdraw();           // random withdrawal
   string withdraw(int amount); // used during transfer
 };

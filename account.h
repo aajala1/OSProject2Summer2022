@@ -1,7 +1,9 @@
 //account.h
 #pragma once
 #include <iostream>
-using std::string;
+#include <string.h>
+
+using namespace std;
 
 //abstract class or interface
 class IAccount
@@ -13,10 +15,7 @@ public:
   int balance = 0;
   string type;
 
-  IAccount(string t)
-  {
-    set_type(t);
-  }
+  IAccount(string t);
 
   /* getters */
   int get_no_deposit(void);

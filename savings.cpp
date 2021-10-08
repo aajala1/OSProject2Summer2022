@@ -1,8 +1,13 @@
 #include <iostream>
 #include "savings.h"
+#include "account.h"
+#include <string.h>
 
-using std::string;
 using namespace std;
+
+SavingsAccount::SavingsAccount() : IAccount("savings")
+{
+}
 
 string SavingsAccount::deposit()
 {

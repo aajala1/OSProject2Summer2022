@@ -1,8 +1,12 @@
 #include <iostream>
 #include "checking.h"
+#include <string.h>
 
-using std::string;
 using namespace std;
+
+CheckingAccount::CheckingAccount() : IAccount("checking")
+{
+}
 
 string CheckingAccount::deposit()
 {
