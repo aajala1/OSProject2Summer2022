@@ -103,31 +103,33 @@ public:
   {
   }
 
-  string deposit()
+  void deposit()
   {
     int amount = this->generate_amount(50, 100);
-    cout << "Amount deposited for checking(50 - 100): " << amount << endl;
+    cout << "\n\nAmount deposited for checking(50 - 100): " << amount << endl;
     cout << "prev balance: " << to_string(this->balance) << endl;
     this->balance += amount;
     cout << "new balance: " << to_string(this->balance) << endl;
     this->no_deposits++;
     string message = "DEPOSIT " + this->strToUpper(this->type) + " " + to_string(amount);
-    return message;
+    cout << message << endl;
+    return;
   }
 
-  string deposit(int amount)
+  void deposit(int amount)
   {
-    cout << "\nChecking deposite during transfer" << endl;
+    cout << "\nChecking deposit during transfer: " << amount << endl;
     cout << "---------------------------------------" << endl;
     cout << "prev balance: " << to_string(this->balance) << endl;
     this->balance += amount;
     cout << "new balance: " << to_string(this->balance) << endl;
     this->no_deposits++;
     string message = "DEPOSIT " + this->strToUpper(this->type) + " " + to_string(amount);
-    return message;
+    cout << message << endl;
+    return;
   }
 
-  string withdraw()
+  void withdraw()
   {
     int amount = generate_amount(50, 100);
     string message = "WITHDRAWAL " + this->strToUpper(this->type) + " " + to_string(amount);
@@ -136,32 +138,38 @@ public:
     {
       message += " (REJECTED)";
       this->no_rejected++;
-      return message;
+      cout << message << endl;
+      return;
     }
 
+    cout << "\nChecking withdrawing: " << amount << endl;
+    cout << "---------------------------------------" << endl;
     cout << "prev balance " << this->balance << endl;
     balance -= amount;
     cout << "new balance " << this->balance << endl;
     this->no_withdrawals++;
-    return message;
+    cout << message << endl;
+    return;
   }
 
-  string withdraw(int amount)
+  void withdraw(int amount)
   {
     string message = "WITHDRAWAL " + this->strToUpper(this->type) + " " + to_string(amount);
     if (amount > this->balance)
     {
       message += " (REJECTED)";
       this->no_rejected++;
-      return message;
+      cout << message << endl;
+      return;
     }
-    cout << "\nChecking withdrawing during transfer" << endl;
+    cout << "\nChecking withdrawing during transfer: " << amount << endl;
     cout << "---------------------------------------" << endl;
     cout << "prev balance " << this->balance << endl;
     balance -= amount;
     cout << "new balance " << this->balance << endl;
     this->no_withdrawals++;
-    return message;
+    cout << message << endl;
+    return;
   }
 };
 
@@ -175,7 +183,7 @@ public:
   string deposit()
   {
     int amount = this->generate_amount(100, 150);
-    cout << "Amount deposited for savings(100 - 150): " << amount << endl;
+    cout << "\n\nAmount deposited for savings(100 - 150): " << amount << endl;
     cout << "prev balance: " << to_string(this->balance) << endl;
     this->balance += amount;
     cout << "new balance: " << to_string(this->balance) << endl;
@@ -184,9 +192,9 @@ public:
     return message;
   }
 
-  string deposit(int amount)
+  void deposit(int amount)
   {
-    cout << "\nSavings deposit during transfer" << endl;
+    cout << "\nSavings deposit during transfer: " << amount << endl;
     cout << "---------------------------------------" << endl;
     cout << "Amount deposited for savings(100 - 150): " << amount << endl;
     cout << "prev balance: " << to_string(this->balance) << endl;
@@ -194,10 +202,11 @@ public:
     cout << "new balance: " << to_string(this->balance) << endl;
     this->no_deposits++;
     string message = "DEPOSIT " + this->strToUpper(this->type) + " " + to_string(amount);
-    return message;
+    cout << message << endl;
+    return;
   }
 
-  string withdraw()
+  void withdraw()
   {
     int amount = this->generate_amount(100, 150);
     string message = "WITHDRAWAL " + this->strToUpper(this->type) + " " + to_string(amount);
@@ -206,17 +215,20 @@ public:
     {
       message += " (REJECTED)";
       this->no_rejected++;
-      return message;
+      cout << message << endl;
+      return;
     }
-
+    cout << "Savings withdrawal " << amount << endl;
+    cout << "---------------------------------------" << endl;
     cout << "prev balance " << this->balance << endl;
     balance -= amount;
     cout << "new balance " << this->balance << endl;
     this->no_withdrawals++;
-    return message;
+    cout << message << endl;
+    return;
   }
 
-  string withdraw(int amount)
+  void withdraw(int amount)
   {
     string message = "WITHDRAWAL " + this->strToUpper(this->type) + " " + to_string(amount);
 
@@ -224,15 +236,17 @@ public:
     {
       message += " (REJECTED)";
       this->no_rejected++;
-      return message;
+      cout << message << endl;
+      return;
     }
-    cout << "\nsavings withdrawing during transfer" << endl;
+    cout << "\nsavings withdrawing during transfer: " << amount << endl;
     cout << "---------------------------------------" << endl;
     cout << "prev balance " << this->balance << endl;
     balance -= amount;
     cout << "new balance " << this->balance << endl;
     this->no_withdrawals++;
-    return message;
+    cout << message << endl;
+    return;
   }
 };
 
@@ -243,6 +257,7 @@ int buffer[BUF_SIZE];
 sem_t buffer_access;
 SavingsAccount savings_account_stats;
 CheckingAccount checking_account_stats;
+int operations_count = 0;
 
 int main(int argc, char *argv[])
 {
@@ -271,8 +286,8 @@ int main(int argc, char *argv[])
   srand(time(0)); /* help seed random function */
   thread_params *params = new thread_params;
 
-  params->loop_count = loop_count;
-  
+  params->mutex_ptr = &mutex;
+
   pthread_mutex_init(&mutex, NULL);
   sem_init(&empty, 0, BUF_SIZE);
   sem_init(&full, 0, 0);
@@ -286,13 +301,18 @@ int main(int argc, char *argv[])
   for (int i = 0; i < loop_count; i++)
   {
     params->operation_indicator = savings_account_stats.generate_amount(1, 6);
-
     pthread_create(&t_checking, &attr, account_thread, (void *)params);
-    // pthread_create(&t_savings, &attr, account_thread, (void *)params);
-
     pthread_join(t_checking, NULL);
-    // pthread_join(t_savings, NULL);
   }
+  cout << endl
+       << "-------------------------------------------" << endl;
+  cout << "TOTAL OPERATIONS EXECUTED: " << operations_count << endl;
+
+  cout << endl
+       << "-------------------------------------------" << endl;
+  cout << "Account summary: " << operations_count << endl;
+  savings_account_stats.toString();
+  checking_account_stats.toString();
 
   return 0;
 }
@@ -300,28 +320,35 @@ int main(int argc, char *argv[])
 void *account_thread(void *params_ptr)
 {
   thread_params *params = (thread_params *)params_ptr;
-
+  pthread_mutex_lock(params->mutex_ptr);
   switch (params->operation_indicator)
   {
   case 1: /* deposit in checking account */
     checking_account_stats.deposit();
+    operations_count++;
     break;
   case 2: /* withdraw from checking account */
     checking_account_stats.withdraw();
+    operations_count++;
     break;
   case 3: /* deposit in savings account */
     savings_account_stats.deposit();
+    operations_count++;
     break;
   case 4: /* withdraw from savings account */
     savings_account_stats.withdraw();
+    operations_count++;
     break;
   case 5: /* transfer from checking to savings account */
     transfer_to<CheckingAccount, SavingsAccount>(checking_account_stats, savings_account_stats);
+    operations_count++;
     break;
   case 6: /* transfer from savings to checking account */
     transfer_to<SavingsAccount, CheckingAccount>(savings_account_stats, checking_account_stats);
+    operations_count++;
     break;
   }
+  pthread_mutex_unlock(params->mutex_ptr);
 
   return params_ptr;
 }
