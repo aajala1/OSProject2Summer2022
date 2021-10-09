@@ -6,9 +6,9 @@
 #include <pthread.h>
 #include "config.h"
 
-extern int buffer[5];
-extern sem_t buffer_access;
 // global stats for saving account
+extern int buffer[BUF_SIZE];
+extern sem_t buffer_access;
 extern SavingsAccount savings_account_stats;
 extern CheckingAccount checking_account_stats;
 
@@ -37,4 +37,6 @@ void *account_thread(void *params_ptr)
     transfer_to<SavingsAccount, CheckingAccount>(savings_account_stats, checking_account_stats);
     break;
   }
+
+  return params_ptr;
 }

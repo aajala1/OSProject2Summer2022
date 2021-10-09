@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
-using std::string;
+#include <string>
+
+using namespace std;
+
+const int BUF_SIZE = 1024;
 
 // structure of our params
 struct thread_params
