@@ -1,13 +1,18 @@
 #pragma once
 #include <iostream>
-using std::string;
+#include <string>
+#include <pthread.h>
+
+using namespace std;
+
+const int BUF_SIZE = 1024;
 
 // structure of our params
 //Global variable
 const int BUF_SIZE =5;
 struct thread_params
 {
-  int loop_count;
+  pthread_mutex_t *mutex_ptr;
   int operation_indicator;
 };
 
