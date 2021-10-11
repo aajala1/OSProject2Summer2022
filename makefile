@@ -45,5 +45,5 @@ p1.o: p1.cpp config.h
 			
 
 clean:
-	rm *.o p1 p2
+	rm *.o p1 p2 *.txt
 

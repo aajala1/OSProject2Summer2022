@@ -2,6 +2,11 @@
 #include <iostream>
 #include <string>
 #include <pthread.h>
+#include <sstream>
+#include <fstream>
+#include <ctime>
+#include <locale>
+#include <iomanip>
 
 using namespace std;
 
@@ -35,6 +40,7 @@ struct thread_params
   pthread_mutex_t *mutex_ptr;
   int loop_count;
   int operation_indicator;
+  int thread_count;
 };
 
 struct response
@@ -100,12 +106,32 @@ void update_thread_stats(stats &stats, U &account)
   stats.no_withdrawals = account.get_no_withdrawals();
 }
 
-void print_stats(stats &stats, string type)
+string print_stats(stats &stats, string type)
 {
-  std::cout << "\n============== Thread summary for " << type << " account =================" << endl;
-  std::cout << "Balance: " << stats.balance << std::endl;
-  std::cout << "# of withdrawals: " << stats.no_withdrawals << std::endl;
-  std::cout << "# of deposits: " << stats.no_deposits << std::endl;
-  std::cout << "# of rejections: " << stats.no_rejected << std::endl;
-  std::cout << "------------------------------------------------" << endl;
+  stringstream output;
+  // strcat(output, )
+  output << "\n============== Thread summary for " << type << " account =================" << endl;
+  output << "Balance: " << stats.balance << std::endl;
+  output << "# of withdrawals: " << stats.no_withdrawals << std::endl;
+  output << "# of deposits: " << stats.no_deposits << std::endl;
+  output << "# of rejections: " << stats.no_rejected << std::endl;
+  output << "------------------------------------------------" << endl;
+
+  std::cout << output.str();
+  return output.str();
+}
+
+void log_message(string msg, int thread_number, string thread_type)
+{
+  ofstream file;
+  stringstream filename;
+  time_t now = time(0);
+
+  // convert now to string form
+  char *dt = ctime(&now);
+  filename << thread_type << "_thread_" << thread_number << "_log.txt";
+
+  file.open(filename.str(), ios::app);
+  file << "LOG: " << dt << " " << msg << "\n\n";
+  file.close();
 }
