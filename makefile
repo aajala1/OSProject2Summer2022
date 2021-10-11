@@ -45,4 +45,9 @@ p1.o: p1.cpp config.h
 			
 
 clean:
+<<<<<<< HEAD
 	rm *.o p1 p2
+=======
+	rm *.o p1 p2 *.txt
+
+>>>>>>> 4fab78761501601b241c0dd6ad6391e88d07ff8b

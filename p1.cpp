@@ -336,27 +336,23 @@ int main(int argc, char *argv[])
 
   for (int i = 0; i < THREAD_COUNT; i++)
   {
+    params->thread_count = i;
     pthread_create(&t_account_thread[i], &attr, account_thread, (void *)params);
     pthread_join(t_account_thread[i], NULL);
 
     update_thread_stats(th_checking[i], checking_account);
     update_thread_stats(th_savings[i], savings_account);
 
-    print_stats(th_checking[i], checking_account.get_type());
-    print_stats(th_savings[i], savings_account.get_type());
+    std::string msg_checking = print_stats(th_checking[i], checking_account.get_type());
+    std::string msg_savings = print_stats(th_savings[i], savings_account.get_type());
+
+    log_message(msg_checking, (++i), "checking");
+    log_message(msg_savings, (++i), "savings");
   }
 
-  // cout << endl
-  //      << "-------------------------------------------" << endl;
-  // cout << "TOTAL OPERATIONS EXECUTED: " << operations_count << endl;
-
-  // cout << endl
-  //      << "-------------------------------------------" << endl;
-  // cout << "Account summary: " << operations_count << endl;
-
-  // TODO: handle printing all stats at the end of the thread iteration
-  // savings_account_stats.toString();
-  // checking_account_stats.toString();
+  cout << "============== STATS SUMMARY ==============" << endl;
+  print_stats(checking_account_stats, "checking");
+  print_stats(savings_account_stats, "savings");
 
   return 0;
 }
@@ -375,32 +371,39 @@ void *account_thread(void *params_ptr)
     case 1: /* deposit in checking account */
       response = checking_account.deposit();
       update_stats_info(checking_account_stats, response); /* updage global stats */
+      update_stats_info(th_checking[params->thread_count], response);
       break;
     case 2: /* withdraw from checking account */
       response = checking_account.withdraw();
       update_stats_info(checking_account_stats, response); /* updage global stats */
+      update_stats_info(th_checking[params->thread_count], response);
       break;
     case 3: /* deposit in savings account */
       response = savings_account.deposit();
       update_stats_info(checking_account_stats, response); /* updage global stats */
+      update_stats_info(th_checking[params->thread_count], response);
       break;
     case 4: /* withdraw from savings account */
       response = savings_account.withdraw();
       update_stats_info(savings_account_stats, response); /* updage global stats */
+      update_stats_info(th_checking[params->thread_count], response);
       break;
     case 5: /* transfer from checking to savings account */
       response = transfer_to<CheckingAccount, SavingsAccount>(checking_account, savings_account);
       if (response.type == CANCELED)
       {
         update_stats_info(checking_account_stats, response); /* updage global stats */
+        update_stats_info(th_checking[params->thread_count], response);
       }
       else
       {
         response.type = DEBIT;
         update_stats_info(checking_account_stats, response); /* updage global stats */
+        update_stats_info(th_checking[params->thread_count], response);
 
         response.type = CREDIT;
         update_stats_info(savings_account_stats, response); /* updage global stats */
+        update_stats_info(th_checking[params->thread_count], response);
       }
 
       break;
@@ -409,14 +412,17 @@ void *account_thread(void *params_ptr)
       if (response.type == CANCELED)
       {
         update_stats_info(savings_account_stats, response); /* updage global stats */
+        update_stats_info(th_checking[params->thread_count], response);
       }
       else
       {
         response.type = DEBIT;
         update_stats_info(savings_account_stats, response); /* update global stats */
+        update_stats_info(th_checking[params->thread_count], response);
 
         response.type = CREDIT;
         update_stats_info(checking_account_stats, response); /* update global stats */
+        update_stats_info(th_checking[params->thread_count], response);
       }
       break;
     }
