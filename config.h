@@ -36,7 +36,7 @@ int generate_random_operaton(int min, int max)
 
 // structure of our params
 //Global variable
-const int BUF_SIZE =5;
+
 struct thread_params
 {
   pthread_mutex_t *mutex_ptr;
