@@ -339,7 +339,6 @@ int main(int argc, char *argv[])
     params->thread_count = i;
     pthread_create(&t_account_thread[i], &attr, account_thread, (void *)params);
     pthread_join(t_account_thread[i], NULL);
-
     update_thread_stats(th_checking[i], checking_account);
     update_thread_stats(th_savings[i], savings_account);
 
