@@ -14,6 +14,9 @@ account_thread.o: account_thread.cpp config.h
 p1.o: p1.cpp config.h 
 		g++ -c -g p1.cpp
 
+test: test.o
+		g++ -c -g test.o test.cpp
+
 # clean:
 # 	rm p1 p2
 
@@ -45,5 +48,5 @@ p1.o: p1.cpp config.h
 			
 
 clean:
-	rm *.o p1 p2 *.txt
+	rm *.o p1 *.txt
 

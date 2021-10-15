@@ -35,7 +35,7 @@ int generate_random_operaton(int min, int max)
 }
 
 // structure of our params
-//Global variable
+// Global variable
 
 struct thread_params
 {
@@ -111,7 +111,7 @@ void update_thread_stats(stats &stats, U &account)
 string print_stats(stats &stats, string type)
 {
   stringstream output;
-  // strcat(output, )
+  output.clear();
   output << "\n============== Thread summary for " << type << " account =================" << endl;
   output << "Balance: " << stats.balance << std::endl;
   output << "# of withdrawals: " << stats.no_withdrawals << std::endl;
@@ -123,17 +123,33 @@ string print_stats(stats &stats, string type)
   return output.str();
 }
 
-void log_message(string msg, int thread_number, string thread_type)
+void log_message(string msg, int thread_number)
 {
+  cout << "log thread number: " << thread_number << endl;
   ofstream file;
   stringstream filename;
   time_t now = time(0);
 
   // convert now to string form
   char *dt = ctime(&now);
-  filename << thread_type << "_thread_" << thread_number << "_log.txt";
+  filename << "thread_" << thread_number << "_log.txt";
 
   file.open(filename.str(), ios::app);
+  file << "Thread # " << thread_number << ": " << endl;
   file << "LOG: " << dt << " " << msg << "\n\n";
   file.close();
+}
+
+void init_log_files(ofstream &log_files_ref, int size)
+{
+  ofstream file;
+  for (int i = 0; i < size; i++)
+  {
+    stringstream filename;
+    filename << "thread_" << i << "_log.txt";
+    file.open(filename.str(), ios::app);
+    file << "LOGS FOR THREAD: " << i << "\n\n";
+    file << "------------------------------------------------" << endl;
+    file.close();
+  }
 }
