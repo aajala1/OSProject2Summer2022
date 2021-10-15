@@ -366,6 +366,7 @@ void *account_thread(void *params_ptr)
   for (int count = 0; count < params->loop_count; count++)
   {
     params->operation_indicator = generate_random_operaton(1, 6);
+    cout<<"random operation: " << params->operation_indicator<<endl;
     switch (params->operation_indicator)
     {
     case 1: /* deposit in checking account */
