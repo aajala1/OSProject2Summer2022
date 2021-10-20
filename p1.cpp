@@ -328,10 +328,6 @@ int main(int argc, char *argv[])
   }
 
   srand(time(0)); /* help seed random function */
-  thread_params *params = new thread_params;
-
-  params->mutex_ptr = &mutex;
-  params->loop_count = loop_count;
 
   pthread_mutex_init(&mutex, NULL);
   sem_init(&empty, 0, BUF_SIZE);
@@ -342,9 +338,14 @@ int main(int argc, char *argv[])
   pthread_attr_t attr;
   pthread_attr_init(&attr);
   pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+  
   int i;
   for (i = 1; i <= THREAD_COUNT; i++)
   {
+    thread_params *params = new thread_params;
+
+    params->mutex_ptr = &mutex;
+    params->loop_count = loop_count;
     params->thread_count = i;
     std::cout << "Current thread count: " << i << endl;
     int thread_id = pthread_create(&t_account_thread[i - 1], &attr, account_thread, (void *)params);
@@ -379,110 +380,109 @@ int main(int argc, char *argv[])
   pthread_exit(NULL);
 }
 
-void *account_thread(void *params_ptr)
-{
-  stringstream output;
-  thread_params *params = (thread_params *)params_ptr;
-  output << "message from thread " << params->thread_count << endl;
-  cout << "thread content goes here" << endl;
-  pthread_mutex_lock(params->mutex_ptr);
-  log_message(output.str(), params->thread_count);
-  pthread_mutex_unlock(params->mutex_ptr);
-  pthread_exit(NULL);
-}
-
 // void *account_thread(void *params_ptr)
 // {
+//   stringstream output;
 //   thread_params *params = (thread_params *)params_ptr;
+//   output << "message from thread " << params->thread_count << endl;
+//   cout << "thread content goes here" << endl;
 //   pthread_mutex_lock(params->mutex_ptr);
-//   response response;
-//   cout << "current th"
-//   for (int count = 0; count < params->loop_count; count++)
-//   {
-//     thread_tracker++;
-//     cout << "current active thread: " << params->thread_count << endl;
-//     params->operation_indicator = generate_random_operaton(1, 6);
-//     switch (params->operation_indicator)
-//     {
-//     case 1: /* deposit in checking account */
-//       response = checking_account.deposit();
-//       update_stats_info(checking_account_stats, response); /* updage global stats */
-//       update_stats_info(th_checking[params->thread_count], response);
-//       log_message(response.message, params->thread_count);
-//       break;
-//     case 2: /* withdraw from checking account */
-//       response = checking_account.withdraw();
-//       update_stats_info(checking_account_stats, response); /* updage global stats */
-//       update_stats_info(th_checking[params->thread_count], response);
-//       log_message(response.message, params->thread_count);
-//       break;
-//     case 3: /* deposit in savings account */
-//       response = savings_account.deposit();
-//       update_stats_info(checking_account_stats, response); /* updage global stats */
-//       update_stats_info(th_checking[params->thread_count], response);
-//       log_message(response.message, params->thread_count);
-//       break;
-//     case 4: /* withdraw from savings account */
-//       response = savings_account.withdraw();
-//       update_stats_info(savings_account_stats, response); /* updage global stats */
-//       update_stats_info(th_checking[params->thread_count], response);
-//       log_message(response.message, params->thread_count);
-//       break;
-//     case 5: /* transfer from checking to savings account */
-//       response = transfer_to<CheckingAccount, SavingsAccount>(checking_account, savings_account);
-//       if (response.type == CANCELED)
-//       {
-//         update_stats_info(checking_account_stats, response); /* updage global stats */
-//         update_stats_info(th_checking[params->thread_count], response);
-//         log_message(response.message, params->thread_count);
-//       }
-//       else
-//       {
-//         response.type = DEBIT;
-//         update_stats_info(checking_account_stats, response); /* updage global stats */
-//         update_stats_info(th_checking[params->thread_count], response);
-//         log_message(response.message, params->thread_count);
-
-//         response.type = CREDIT;
-//         update_stats_info(savings_account_stats, response); /* updage global stats */
-//         update_stats_info(th_checking[params->thread_count], response);
-//         log_message(response.message, params->thread_count);
-//       }
-
-//       break;
-//     case 6: /* transfer from savings to checking account */
-//       response = transfer_to<SavingsAccount, CheckingAccount>(savings_account, checking_account);
-//       if (response.type == CANCELED)
-//       {
-//         update_stats_info(savings_account_stats, response); /* updage global stats */
-//         update_stats_info(th_checking[params->thread_count], response);
-//         log_message(response.message, params->thread_count);
-//       }
-//       else
-//       {
-//         response.type = DEBIT;
-//         update_stats_info(savings_account_stats, response); /* update global stats */
-//         update_stats_info(th_checking[params->thread_count], response);
-//         log_message(response.message, params->thread_count);
-
-//         response.type = CREDIT;
-//         update_stats_info(checking_account_stats, response); /* update global stats */
-//         update_stats_info(th_checking[params->thread_count], response);
-//         log_message(response.message, params->thread_count);
-//       }
-//       break;
-//     }
-//   }
-
-//   update_thread_stats(th_checking[params->thread_count], checking_account);
-//   update_thread_stats(th_savings[params->thread_count], savings_account);
-
-//   std::string msg_checking = print_stats(th_checking[params->thread_count], checking_account.get_type());
-//   std::string msg_savings = print_stats(th_savings[params->thread_count], savings_account.get_type());
-
-//   log_message(msg_checking, params->thread_count);
-//   log_message(msg_savings, params->thread_count);
-
+//   log_message(output.str(), params->thread_count);
 //   pthread_mutex_unlock(params->mutex_ptr);
 //   pthread_exit(NULL);
 // }
+
+void *account_thread(void *params_ptr)
+{
+  thread_params *params = (thread_params *)params_ptr;
+  pthread_mutex_lock(params->mutex_ptr);
+  response response;
+  for (int count = 0; count < params->loop_count; count++)
+  {
+    thread_tracker++;
+    cout << "current active thread: " << params->thread_count << endl;
+    params->operation_indicator = generate_random_operaton(1, 6);
+    switch (params->operation_indicator)
+    {
+    case 1: /* deposit in checking account */
+      response = checking_account.deposit();
+      update_stats_info(checking_account_stats, response); /* updage global stats */
+      update_stats_info(th_checking[params->thread_count], response);
+      log_message(response.message, params->thread_count);
+      break;
+    case 2: /* withdraw from checking account */
+      response = checking_account.withdraw();
+      update_stats_info(checking_account_stats, response); /* updage global stats */
+      update_stats_info(th_checking[params->thread_count], response);
+      log_message(response.message, params->thread_count);
+      break;
+    case 3: /* deposit in savings account */
+      response = savings_account.deposit();
+      update_stats_info(checking_account_stats, response); /* updage global stats */
+      update_stats_info(th_checking[params->thread_count], response);
+      log_message(response.message, params->thread_count);
+      break;
+    case 4: /* withdraw from savings account */
+      response = savings_account.withdraw();
+      update_stats_info(savings_account_stats, response); /* updage global stats */
+      update_stats_info(th_checking[params->thread_count], response);
+      log_message(response.message, params->thread_count);
+      break;
+    case 5: /* transfer from checking to savings account */
+      response = transfer_to<CheckingAccount, SavingsAccount>(checking_account, savings_account);
+      if (response.type == CANCELED)
+      {
+        update_stats_info(checking_account_stats, response); /* updage global stats */
+        update_stats_info(th_checking[params->thread_count], response);
+        log_message(response.message, params->thread_count);
+      }
+      else
+      {
+        response.type = DEBIT;
+        update_stats_info(checking_account_stats, response); /* updage global stats */
+        update_stats_info(th_checking[params->thread_count], response);
+        log_message(response.message, params->thread_count);
+
+        response.type = CREDIT;
+        update_stats_info(savings_account_stats, response); /* updage global stats */
+        update_stats_info(th_checking[params->thread_count], response);
+        log_message(response.message, params->thread_count);
+      }
+
+      break;
+    case 6: /* transfer from savings to checking account */
+      response = transfer_to<SavingsAccount, CheckingAccount>(savings_account, checking_account);
+      if (response.type == CANCELED)
+      {
+        update_stats_info(savings_account_stats, response); /* updage global stats */
+        update_stats_info(th_checking[params->thread_count], response);
+        log_message(response.message, params->thread_count);
+      }
+      else
+      {
+        response.type = DEBIT;
+        update_stats_info(savings_account_stats, response); /* update global stats */
+        update_stats_info(th_checking[params->thread_count], response);
+        log_message(response.message, params->thread_count);
+
+        response.type = CREDIT;
+        update_stats_info(checking_account_stats, response); /* update global stats */
+        update_stats_info(th_checking[params->thread_count], response);
+        log_message(response.message, params->thread_count);
+      }
+      break;
+    }
+  }
+
+  update_thread_stats(th_checking[params->thread_count], checking_account);
+  update_thread_stats(th_savings[params->thread_count], savings_account);
+
+  std::string msg_checking = print_stats(th_checking[params->thread_count], checking_account.get_type());
+  std::string msg_savings = print_stats(th_savings[params->thread_count], savings_account.get_type());
+
+  log_message(msg_checking, params->thread_count);
+  log_message(msg_savings, params->thread_count);
+
+  pthread_mutex_unlock(params->mutex_ptr);
+  pthread_exit(NULL);
+}
