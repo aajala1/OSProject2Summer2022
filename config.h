@@ -139,17 +139,3 @@ void log_message(string msg, int thread_number)
   file << "LOG: " << dt << " " << msg << "\n\n";
   file.close();
 }
-
-void init_log_files(ofstream &log_files_ref, int size)
-{
-  ofstream file;
-  for (int i = 0; i < size; i++)
-  {
-    stringstream filename;
-    filename << "thread_" << i << "_log.txt";
-    file.open(filename.str(), ios::app);
-    file << "LOGS FOR THREAD: " << i << "\n\n";
-    file << "------------------------------------------------" << endl;
-    file.close();
-  }
-}

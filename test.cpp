@@ -2,10 +2,9 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <pthread.h>
+#define NUM_THREADS 5
 
 using namespace std;
-
-#define NUM_THREADS 5
 
 void *wait(void *t)
 {
@@ -15,8 +14,8 @@ void *wait(void *t)
   tid = (long)t;
 
   sleep(1);
-  cout << "Sleeping in thread " << endl;
-  cout << "Thread with id : " << tid << "  ...exiting " << endl;
+  cout << "Sleeping in thread" << endl;
+  cout << "Thread with id: " << tid << "...exiting" << endl;
   pthread_exit(NULL);
 }
 
@@ -53,8 +52,8 @@ int main()
       cout << "Error:unable to join," << rc << endl;
       exit(-1);
     }
-    cout << "Main: completed thread id :" << i;
-    cout << "  exiting with status :" << status << endl;
+    cout << "Main: completed thread id: " << i;
+    cout << "exiting with status: " << status << endl;
   }
 
   cout << "Main: program exiting." << endl;
