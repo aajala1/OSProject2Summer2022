@@ -1,0 +1,152 @@
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ TRANSFER SAVINGS TO CHECKING 169 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ WITHDRAWAL SAVINGS 123 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ TRANSFER CHECKING TO SAVINGS 188 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ WITHDRAWAL SAVINGS 121 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ DEPOSIT CHECKING 68
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ 
+============== Thread summary for checking account =================
+Balance: 148
+# of withdrawals: 0
+# of deposits: 2
+# of rejections: 1
+------------------------------------------------
+
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ 
+============== Thread summary for savings account =================
+Balance: 0
+# of withdrawals: 0
+# of deposits: 0
+# of rejections: 3
+------------------------------------------------
+
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ DEPOSIT CHECKING 80
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ TRANSFER CHECKING TO SAVINGS 183 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ WITHDRAWAL SAVINGS 136 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ WITHDRAWAL CHECKING 68
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ TRANSFER SAVINGS TO CHECKING 127 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ 
+============== Thread summary for checking account =================
+Balance: 80
+# of withdrawals: 1
+# of deposits: 2
+# of rejections: 2
+------------------------------------------------
+
+
+Thread # 2: 
+LOG: Fri Oct 15 16:56:56 2021
+ 
+============== Thread summary for savings account =================
+Balance: 0
+# of withdrawals: 0
+# of deposits: 0
+# of rejections: 5
+------------------------------------------------
+
+
+Thread # 2: 
+Thread # 2: 
+LOG: Fri Oct 15 17:21:42 2021
+ WITHDRAWAL CHECKING 64 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 17:21:42 2021
+ WITHDRAWAL SAVINGS 137 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 17:21:42 2021
+ DEPOSIT CHECKING 66
+
+Thread # 2: 
+LOG: Fri Oct 15 17:21:42 2021
+ 
+============== Thread summary for checking account =================
+Balance: 66
+# of withdrawals: 0
+# of deposits: 1
+# of rejections: 1
+------------------------------------------------
+
+
+Thread # 2: 
+LOG: Fri Oct 15 17:21:42 2021
+ 
+============== Thread summary for savings account =================
+Balance: 0
+# of withdrawals: 0
+# of deposits: 0
+# of rejections: 2
+------------------------------------------------
+
+
+LOG: Fri Oct 15 17:21:42 2021
+ WITHDRAWAL SAVINGS 101 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 17:21:42 2021
+ TRANSFER SAVINGS TO CHECKING 173 (REJECTED)
+
+Thread # 2: 
+LOG: Fri Oct 15 17:21:42 2021
+ DEPOSIT SAVINGS 116
+
+Thread # 2: 
+LOG: Fri Oct 15 17:21:42 2021
+ 
+============== Thread summary for checking account =================
+Balance: 66
+# of withdrawals: 0
+# of deposits: 1
+# of rejections: 1
+------------------------------------------------
+
+
+Thread # 2: 
+LOG: Fri Oct 15 17:21:42 2021
+ 
+============== Thread summary for savings account =================
+Balance: 116
+# of withdrawals: 0
+# of deposits: 1
+# of rejections: 3
+------------------------------------------------
+
+

@@ -11,7 +11,7 @@
 using namespace std;
 
 const int BUF_SIZE = 1024;
-const int THREAD_COUNT = 2;
+const int THREAD_COUNT = 3;
 enum TRANS_TYPE
 {
   CANCELED,

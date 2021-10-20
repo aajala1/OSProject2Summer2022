@@ -328,10 +328,6 @@ int main(int argc, char *argv[])
   }
 
   srand(time(0)); /* help seed random function */
-  thread_params *params = new thread_params;
-
-  params->mutex_ptr = &mutex;
-  params->loop_count = loop_count;
 
   pthread_mutex_init(&mutex, NULL);
   sem_init(&empty, 0, BUF_SIZE);
@@ -342,21 +338,31 @@ int main(int argc, char *argv[])
   pthread_attr_t attr;
   pthread_attr_init(&attr);
   pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-
-  for (int i = 1; i <= THREAD_COUNT; i++)
+  
+  int i;
+  for (i = 1; i <= THREAD_COUNT; i++)
   {
+    thread_params *params = new thread_params;
+
+    params->mutex_ptr = &mutex;
+    params->loop_count = loop_count;
     params->thread_count = i;
+    std::cout << "Current thread count: " << i << endl;
     int thread_id = pthread_create(&t_account_thread[i - 1], &attr, account_thread, (void *)params);
     if (thread_id)
     {
       std::cout << "unable to create thread " << thread_id << endl;
       exit(-1);
     }
+    else
+    {
+      std::cout << "Thread " << i << " created" << endl;
+    }
   }
 
   // free attribute and wait for the other threads
-  pthread_attr_destroy(&attr);
-  for (int i = 0; i < THREAD_COUNT; i++)
+  // pthread_attr_destroy(&attr);
+  for (i = 0; i < THREAD_COUNT; i++)
   {
     int thread_id = pthread_join(t_account_thread[i], &status);
     if (thread_id)
@@ -364,19 +370,33 @@ int main(int argc, char *argv[])
       std::cout << "unable to create thread " << thread_id << endl;
       exit(-1);
     }
+    else
+    {
+      std::cout << "Thread " << i << " joining......." << endl;
+    }
   }
 
   cout << "thread tracker: " << thread_tracker << endl;
   pthread_exit(NULL);
-  return 0;
 }
+
+// void *account_thread(void *params_ptr)
+// {
+//   stringstream output;
+//   thread_params *params = (thread_params *)params_ptr;
+//   output << "message from thread " << params->thread_count << endl;
+//   cout << "thread content goes here" << endl;
+//   pthread_mutex_lock(params->mutex_ptr);
+//   log_message(output.str(), params->thread_count);
+//   pthread_mutex_unlock(params->mutex_ptr);
+//   pthread_exit(NULL);
+// }
 
 void *account_thread(void *params_ptr)
 {
   thread_params *params = (thread_params *)params_ptr;
-  // pthread_mutex_lock(params->mutex_ptr);
+  pthread_mutex_lock(params->mutex_ptr);
   response response;
-  // cout << "current th"
   for (int count = 0; count < params->loop_count; count++)
   {
     thread_tracker++;
@@ -464,6 +484,6 @@ void *account_thread(void *params_ptr)
   log_message(msg_checking, params->thread_count);
   log_message(msg_savings, params->thread_count);
 
-  // pthread_mutex_unlock(params->mutex_ptr);
-  return params_ptr;
+  pthread_mutex_unlock(params->mutex_ptr);
+  pthread_exit(NULL);
 }

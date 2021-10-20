@@ -1,0 +1,130 @@
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER CHECKING TO SAVINGS 133
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER CHECKING TO SAVINGS 133
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER CHECKING TO SAVINGS 169 (REJECTED)
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ WITHDRAWAL SAVINGS 146
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ DEPOSIT SAVINGS 141
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ DEPOSIT SAVINGS 125
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER CHECKING TO SAVINGS 102 (REJECTED)
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER SAVINGS TO CHECKING 110
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER SAVINGS TO CHECKING 110
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ DEPOSIT SAVINGS 146
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ WITHDRAWAL SAVINGS 114
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ WITHDRAWAL CHECKING 72
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER SAVINGS TO CHECKING 133
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER SAVINGS TO CHECKING 133
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ WITHDRAWAL SAVINGS 123
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER CHECKING TO SAVINGS 183
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER CHECKING TO SAVINGS 183
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ DEPOSIT CHECKING 56
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ WITHDRAWAL CHECKING 68
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER SAVINGS TO CHECKING 100
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER SAVINGS TO CHECKING 100
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER SAVINGS TO CHECKING 101
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER SAVINGS TO CHECKING 101
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER CHECKING TO SAVINGS 128
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ TRANSFER CHECKING TO SAVINGS 128
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ WITHDRAWAL SAVINGS 113
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ WITHDRAWAL SAVINGS 102
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ 
+============== Thread summary for checking account =================
+Balance: 91
+# of withdrawals: 10
+# of deposits: 10
+# of rejections: 14
+------------------------------------------------
+
+
+Thread # 3: 
+LOG: Wed Oct 20 21:33:06 2021
+ 
+============== Thread summary for savings account =================
+Balance: 23
+# of withdrawals: 14
+# of deposits: 13
+# of rejections: 8
+------------------------------------------------
+
+
