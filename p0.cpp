@@ -297,7 +297,6 @@ static int thread_tracker = 0;
 int main(int argc, char *argv[])
 {
   // mutex to access the buffer
-  pthread_mutex_t mutex;
   void *status;
 
   cout << "arguments 01: " << argv[0] << " " << argv[1] << endl;
@@ -317,8 +316,6 @@ int main(int argc, char *argv[])
 
   srand(time(0)); /* help seed random function */
 
-  pthread_mutex_init(&mutex, NULL);
-
   pthread_t t_account_thread[THREAD_COUNT];
 
   pthread_attr_t attr;
@@ -329,7 +326,6 @@ int main(int argc, char *argv[])
   {
     thread_params *params = new thread_params;
 
-    params->mutex_ptr = &mutex;
     params->loop_count = loop_count;
     params->thread_count = i;
     std::cout << "Current thread count: " << i << endl;
@@ -414,11 +410,8 @@ void *account_thread(void *params_ptr)
               << "--------------------------" << endl;
   cout << thread_info.str() << endl;
 
-  pthread_mutex_lock(params->mutex_ptr);
-
   response response;
-  // th_checking[params->thread_count - 1].balance = checking_account.get_balance();
-  // th_savings[params->thread_count - 1].balance = savings_account.get_balance();
+  usleep(1000);
   for (int count = 0; count < params->loop_count; count++)
   {
     thread_tracker++;
@@ -484,8 +477,6 @@ void *account_thread(void *params_ptr)
       break;
     }
   }
-
-  pthread_mutex_unlock(params->mutex_ptr);
 
   std::string msg_checking = print_stats(th_checking[params->thread_count - 1], checking_account.get_type(), checking_account.get_balance());
   std::string msg_savings = print_stats(th_savings[params->thread_count - 1], savings_account.get_type(), savings_account.get_balance());
