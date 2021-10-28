@@ -57,7 +57,11 @@ template <class T, class U>
 response transfer_to(T &current_account, U &target_account)
 {
   int amount = current_account.generate_amount(100, 200);
-  string message = "TRANSFER " + current_account.strToUpper(current_account.get_type()) + " TO " + current_account.strToUpper(target_account.get_type()) + " " + std::to_string(amount);
+  stringstream message_content;
+  message_content << "TRANSFER " << current_account.strToUpper(current_account.get_type()) << " TO "
+                  << current_account.strToUpper(target_account.get_type()) << " " << std::to_string(amount) << endl;
+
+  string message = message_content.str();
 
   // withdraw from our current this->savings_account
   if (current_account.get_balance() < amount)
@@ -95,7 +99,7 @@ void update_stats_info(stats &stats, response res)
 {
   stats.balance = get_new_balance(stats.balance, res);
   stats.no_deposits += res.type == CREDIT ? 1 : 0;
-  stats.no_rejected += res.type == CREDIT ? 1 : 0;
+  stats.no_rejected += res.type == CANCELED ? 1 : 0;
   stats.no_withdrawals += res.type == DEBIT ? 1 : 0;
 }
 
@@ -108,12 +112,12 @@ void update_thread_stats(stats &stats, U &account)
   stats.no_withdrawals = account.get_no_withdrawals();
 }
 
-string print_stats(stats &stats, string type)
+string print_stats(stats &stats, string type, int balance)
 {
   stringstream output;
   output.clear();
   output << "\n============== Thread summary for " << type << " account =================" << endl;
-  output << "Balance: " << stats.balance << std::endl;
+  output << "Balance: " << balance << std::endl;
   output << "# of withdrawals: " << stats.no_withdrawals << std::endl;
   output << "# of deposits: " << stats.no_deposits << std::endl;
   output << "# of rejections: " << stats.no_rejected << std::endl;
@@ -123,7 +127,7 @@ string print_stats(stats &stats, string type)
   return output.str();
 }
 
-void log_message(string msg, int thread_number)
+void log_message(string msg, int thread_number, string thread_type)
 {
   cout << "log thread number: " << thread_number << endl;
   ofstream file;
@@ -132,10 +136,20 @@ void log_message(string msg, int thread_number)
 
   // convert now to string form
   char *dt = ctime(&now);
-  filename << "thread_" << thread_number << "_log.txt";
+  filename << thread_type << "_thread_" << thread_number << "_log.txt";
 
   file.open(filename.str(), ios::app);
   file << "Thread # " << thread_number << ": " << endl;
   file << "LOG: " << dt << " " << msg << "\n\n";
   file.close();
+}
+
+int sum_account_balance(stats stats_list[], int size)
+{
+  int sum = 0;
+  for (int i = 0; i < size; i++)
+  {
+    sum += stats_list[i].balance;
+  }
+  return sum;
 }
