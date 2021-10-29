@@ -1,6 +1,4 @@
-# Notes
+# Task/Features
 ***
-1. Loging transaction information to files
-2. 
-3. 
-4. 
+[x] Loging transaction information to files
+[ ] Ensure there is race condition for unsync threads

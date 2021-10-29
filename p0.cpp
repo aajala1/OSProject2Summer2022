@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include "config.h"
 
-const string TYPE = "sync";
+const string TYPE = "unsync";
 
 using namespace std;
 
@@ -411,7 +411,9 @@ void *account_thread(void *params_ptr)
   cout << thread_info.str() << endl;
 
   response response;
-  usleep(1000);
+
+  usleep(rand() % 800000); /* incread probability for race condition */
+
   for (int count = 0; count < params->loop_count; count++)
   {
     thread_tracker++;
@@ -478,11 +480,14 @@ void *account_thread(void *params_ptr)
     }
   }
 
+  usleep(rand() % 200000); /* incread probability for race condition */
+
   std::string msg_checking = print_stats(th_checking[params->thread_count - 1], checking_account.get_type(), checking_account.get_balance());
   std::string msg_savings = print_stats(th_savings[params->thread_count - 1], savings_account.get_type(), savings_account.get_balance());
 
   log_message(msg_checking, params->thread_count, TYPE);
   log_message(msg_savings, params->thread_count, TYPE);
 
-  pthread_exit(NULL);
+  exit(0);
+  // pthread_exit(NULL);
 }
