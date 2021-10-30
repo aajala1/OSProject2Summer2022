@@ -423,11 +423,6 @@ void *account_thread(void *params_ptr)
   {
     thread_tracker++;
     params->operation_indicator = generate_random_operaton(1, 6);
-<<<<<<< HEAD
-    cout<<"random operation: " << params->operation_indicator<<endl;
-=======
-
->>>>>>> 7ac1c2a0b63773c48ccb8530c12d6b31ed1c2176
     switch (params->operation_indicator)
     {
     case 1: /* deposit in checking account */
