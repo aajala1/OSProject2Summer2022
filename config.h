@@ -129,7 +129,6 @@ string print_stats(stats &stats, string type, int balance)
 
 void log_message(string msg, int thread_number, string thread_type)
 {
-  cout << "log thread number: " << thread_number << endl;
   ofstream file;
   stringstream filename;
   time_t now = time(0);

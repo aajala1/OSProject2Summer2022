@@ -299,8 +299,6 @@ int main(int argc, char *argv[])
   // mutex to access the buffer
   void *status;
 
-  cout << "arguments 01: " << argv[0] << " " << argv[1] << endl;
-
   if (argc != 2)
   {
     printf("Usage: %s max_loop_count\n", argv[0]);
@@ -328,45 +326,17 @@ int main(int argc, char *argv[])
 
     params->loop_count = loop_count;
     params->thread_count = i;
-    std::cout << "Current thread count: " << i << endl;
-    int thread_id = pthread_create(&t_account_thread[i - 1], &attr, account_thread, (void *)params);
-    if (thread_id)
-    {
-      std::cout << "unable to create thread " << thread_id << endl;
-      exit(-1);
-    }
-    else
-    {
-      std::cout << "Thread " << i << " created" << endl;
-    }
+    pthread_create(&t_account_thread[i - 1], &attr, account_thread, (void *)params);
   }
 
   // free attribute and wait for the other threads
   pthread_attr_destroy(&attr);
   for (int i = 0; i < THREAD_COUNT; i++)
   {
-    int thread_id = pthread_join(t_account_thread[i], &status);
-    if (thread_id)
-    {
-      std::cout << "unable to create thread " << thread_id << endl;
-      exit(-1);
-    }
-    else
-    {
-      cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
-      checking_account.toString();
-      savings_account.toString();
-      cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    }
+    pthread_join(t_account_thread[i], &status);
   }
 
-  // for (int i = 0; i < THREAD_COUNT; i++)
-  // {
-  //   std::cout << "\n\nPrinting stats\n"
-  //             << std::endl;
-  //   print_stats(th_checking[i], "checking");
-  //   print_stats(th_savings[i], "savings");
-  // }
+  cout << "All threads joined..." << endl;
 
   int th_checking_sum = sum_account_balance(th_checking, THREAD_COUNT);
   int th_savings_sum = sum_account_balance(th_savings, THREAD_COUNT);
@@ -376,7 +346,7 @@ int main(int argc, char *argv[])
        << "th_savings_sum: " << th_savings_sum << endl
        << "saving_account_stats sum: " << savings_account.get_balance() << endl;
 
-  // verifi race conditions
+  // verify race conditions
   cout << "Verifying race conditions" << endl;
   if (savings_account.get_balance() == th_savings_sum)
   {
@@ -397,22 +367,13 @@ int main(int argc, char *argv[])
   }
 
   cout << "\n\nthread tracker: " << thread_tracker << endl;
-
-  pthread_exit(NULL);
 }
 
 void *account_thread(void *params_ptr)
 {
   thread_params *params = (thread_params *)params_ptr;
-  cout << "Evaluating thread params: " << endl;
-  stringstream thread_info;
-  thread_info << "Thread count: " << params->thread_count << endl
-              << "--------------------------" << endl;
-  cout << thread_info.str() << endl;
-
   response response;
-
-  usleep(rand() % 800000); /* incread probability for race condition */
+  usleep(rand() % 500000); /* incread probability for race condition */
 
   for (int count = 0; count < params->loop_count; count++)
   {
