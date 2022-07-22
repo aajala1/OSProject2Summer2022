@@ -135,10 +135,10 @@ void log_message(string msg, int thread_number, string thread_type)
 
   // convert now to string form
   char *dt = ctime(&now);
-  filename << thread_type << "_thread_" << thread_number << "_log.txt";
+  filename << thread_type << "Thread-" << thread_number << "Log.txt";
 
   file.open(filename.str(), ios::app);
-  file << "Thread # " << thread_number << ": " << endl;
+  file << "Thread number " << thread_number << ": " << endl;
   file << "LOG: " << dt << " " << msg << "\n\n";
   file.close();
 }

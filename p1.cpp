@@ -16,10 +16,10 @@ using namespace std;
 
 void *account_thread(void *params_ptr);
 
-class IAccount
+class myAccount
 {
 public:
-  IAccount(string t)
+  myAccount(string t)
   {
     set_type(t);
   }
@@ -106,10 +106,10 @@ protected:
   string type;
 };
 
-class CheckingAccount : public IAccount
+class myCheckingAccount : public myAccount
 {
 public:
-  CheckingAccount() : IAccount("checking")
+  myCheckingAccount() : myAccount("checking")
   {
   }
 
@@ -195,10 +195,10 @@ public:
   }
 };
 
-class SavingsAccount : public IAccount
+class SavingsAccount : public myAccount
 {
 public:
-  SavingsAccount() : IAccount("savings")
+  SavingsAccount() : myAccount("savings")
   {
   }
 
@@ -287,7 +287,7 @@ public:
 void *account_thread(void *);
 
 SavingsAccount savings_account;
-CheckingAccount checking_account;
+myCheckingAccount checking_account;
 
 stats th_checking[THREAD_COUNT];
 stats th_savings[THREAD_COUNT];
@@ -364,13 +364,6 @@ int main(int argc, char *argv[])
     }
   }
 
-  // for (int i = 0; i < THREAD_COUNT; i++)
-  // {
-  //   std::cout << "\n\nPrinting stats\n"
-  //             << std::endl;
-  //   print_stats(th_checking[i], "checking");
-  //   print_stats(th_savings[i], "savings");
-  // }
 
   int th_checking_sum = sum_account_balance(th_checking, THREAD_COUNT);
   int th_savings_sum = sum_account_balance(th_savings, THREAD_COUNT);
@@ -446,7 +439,7 @@ void *account_thread(void *params_ptr)
       log_message(response.message, params->thread_count, TYPE);
       break;
     case 5: /* transfer from checking to savings account */
-      response = transfer_to<CheckingAccount, SavingsAccount>(checking_account, savings_account);
+      response = transfer_to<myCheckingAccount, SavingsAccount>(checking_account, savings_account);
       if (response.type == CANCELED)
       {
         update_stats_info(th_checking[params->thread_count - 1], response);
@@ -464,7 +457,7 @@ void *account_thread(void *params_ptr)
       }
       break;
     case 6: /* transfer from savings to checking account */
-      response = transfer_to<SavingsAccount, CheckingAccount>(savings_account, checking_account);
+      response = transfer_to<SavingsAccount, myCheckingAccount>(savings_account, checking_account);
       if (response.type == CANCELED)
       {
         update_stats_info(th_savings[params->thread_count - 1], response);

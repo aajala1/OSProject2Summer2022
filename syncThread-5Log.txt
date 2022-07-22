@@ -1,0 +1,68 @@
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ DEPOSIT CHECKING 83
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ DEPOSIT CHECKING 91
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ TRANSFER SAVINGS TO CHECKING 118
+(DEBIT)
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ TRANSFER SAVINGS TO CHECKING 118
+(CREDIT)
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ DEPOSIT CHECKING 70
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ WITHDRAWAL CHECKING 93
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ DEPOSIT SAVINGS 144
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ DEPOSIT CHECKING 88
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ WITHDRAWAL CHECKING 52
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ DEPOSIT CHECKING 68
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ DEPOSIT CHECKING 91
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ 
+============== Thread summary for checking account =================
+Balance: 1092
+# of withdrawals: 2
+# of deposits: 7
+# of rejections: 0
+------------------------------------------------
+
+
+Thread number 5: 
+LOG: Fri Jul 22 17:06:12 2022
+ 
+============== Thread summary for savings account =================
+Balance: 269
+# of withdrawals: 1
+# of deposits: 1
+# of rejections: 0
+------------------------------------------------
+
+
